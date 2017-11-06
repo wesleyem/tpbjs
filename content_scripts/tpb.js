@@ -3,35 +3,42 @@ Author: wesleyem
 Project: tpbjs
 */
 
-// Selector for the table
-var table = "#searchResult"
-
-// Selector for untrusted and non-vip users in the 'single' view
-var hideableS = "nobr a:only-of-type"
-
-// Selector for untrusted and non-vip users in the 'double' view
-var hideableD = "td a:only-of-type:not([class])"
-
-// Selector for the viewswitch
-var viewswitch = "div.viewswitch a"
-
-if ($(table).length > 0)
+function fadeUnwanted(element)
 {
-	if ($(viewswitch).attr("href").includes("view=s"))
+	var emptycallback = function () {}
+	if (element)
 	{
-		fadeUnwanted(hideableD)
+		$(element).fadeTo("fast", 0.2, emptycallback)
 	}
 	else
 	{
-		fadeUnwanted(hideableS)
+		console.log("Error code: Elephants")
 	}
 }
 
-function fadeUnwanted(selector) {
-	var emptycallback = function (){}
-	if (selector) {
-		$(selector).closest("tr").fadeTo("fast", 0.2, emptycallback)
-	} else {
-		console.log("No selector given")
-	}
+function showable(tr)
+{
+	return $(tr).find("img[alt='Trusted']").length == 1 ||
+			$(tr).find("img[alt='VIP']").length == 1
 }
+
+function isHeader(tr)
+{
+	return $(tr).hasClass("header")
+}
+
+function isFooter(tr)
+{
+	return $(tr).find("td[colspan]").length == 1
+}
+
+$("#searchResult tr").each(function () {
+	if (isHeader(this) || isFooter(this)) {}
+	else
+	{
+		if (!showable(this))
+		{
+			fadeUnwanted(this)
+		}
+	}
+})

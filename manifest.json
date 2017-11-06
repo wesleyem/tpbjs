@@ -13,12 +13,6 @@
 				"content_scripts/tpb.js"
 			]
 		}
-	],
-	"applications": {
-		"gecko": {
-			"id": "https://github.com/wesleyem/tpbjs/",
-			"strict_min_version": "42.0"
-		}
-	}
+	]
 
 }
